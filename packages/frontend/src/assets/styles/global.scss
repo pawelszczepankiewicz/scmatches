@@ -1,0 +1,68 @@
+@use "variables" as *;
+@use "typography" as *;
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background-color: $sc-gray-light;
+  min-height: 100vh;
+}
+
+#app {
+  overflow-x: hidden;
+}
+
+.page-container {
+  max-width: $max-width;
+  margin: 0 auto;
+  padding: 0 $space-md $space-xl;
+}
+
+a {
+  color: $sc-purple;
+  text-decoration: none;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-sm;
+  padding: $space-sm $space-lg;
+  border: none;
+  border-radius: $radius-sm;
+  font-family: $font-body;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-transform: uppercase;
+
+  &--primary {
+    background: $sc-magenta;
+    color: $sc-white;
+
+    &:hover {
+      background: color-mix(in srgb, $sc-magenta, black 10%);
+    }
+  }
+
+  &--accent {
+    background: $sc-green;
+    color: $sc-dark;
+
+    &:hover {
+      background: $sc-green-dark;
+    }
+  }
+}

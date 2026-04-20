@@ -1,0 +1,40 @@
+// Statscore Design Tokens
+$sc-green: #00FF85;
+$sc-green-dark: #00CC6A;
+$sc-purple: #4C1D95;
+$sc-purple-light: #7C3AED;
+$sc-magenta: #FF00FF;
+$sc-dark: #1A1A2E;
+$sc-white: #FFFFFF;
+$sc-lavender: #F0EDFF;
+$sc-gray-light: #F5F5FA;
+$sc-gray: #9CA3AF;
+$sc-red: #EF4444;
+$sc-green-accessible: #0A8A4A;
+
+// Typography
+$font-display: "Space Grotesk", Helvetica, Arial, sans-serif;
+$font-body: "Space Grotesk", Helvetica, Arial, sans-serif;
+
+// Spacing
+$space-xs: 4px;
+$space-sm: 8px;
+$space-md: 16px;
+$space-lg: 24px;
+$space-xl: 32px;
+$space-2xl: 48px;
+
+// Layout
+$max-width: 1080px;
+$radius-sm: 4px;
+$radius-md: 8px;
+$radius-lg: 16px;
+
+// Score display
+$score-main-size: 1.75rem;
+$score-set-size: 0.75rem;
+$card-min-height: 140px;
+
+// Shadows
+$shadow-card: 0 2px 8px rgba(0, 0, 0, 0.08);
+$shadow-card-hover: 0 4px 16px rgba(0, 0, 0, 0.12);

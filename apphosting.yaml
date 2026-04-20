@@ -1,0 +1,17 @@
+# Settings for Backend (on Cloud Run).
+# See https://firebase.google.com/docs/app-hosting/configure#cloud-run
+runConfig:
+  minInstances: 0
+  maxInstances: 2
+  cpu: 1
+  memoryMiB: 512
+
+env:
+  - variable: CORS_ORIGIN
+    value: "*"
+    availability:
+      - RUNTIME
+  - variable: FIREBASE_PROJECT_ID
+    value: statscoreapp
+    availability:
+      - RUNTIME
