@@ -32,7 +32,7 @@
         <button class="editor__remove" @click="removeMatch(i)" title="Remove match">&times;</button>
         <div class="editor__index">#{{ i + 1 }}</div>
         <div class="editor__fields">
-          <div class="editor__field">
+          <div class="editor__field" :class="{ 'editor__field--error': fieldErrors(match).sport }">
             <label :for="`match-${i}-sport`">Sport</label>
             <input
               :id="`match-${i}-sport`"
@@ -40,8 +40,9 @@
               placeholder="e.g. soccer, tennis..."
               @input="emitUpdate"
             />
+            <span v-if="fieldErrors(match).sport" class="editor__field-error">{{ fieldErrors(match).sport }}</span>
           </div>
-          <div class="editor__field">
+          <div class="editor__field" :class="{ 'editor__field--error': fieldErrors(match).participant1 }">
             <label :for="`match-${i}-p1`">Participant 1</label>
             <input
               :id="`match-${i}-p1`"
@@ -49,8 +50,9 @@
               placeholder="Team or player name"
               @input="emitUpdate"
             />
+            <span v-if="fieldErrors(match).participant1" class="editor__field-error">{{ fieldErrors(match).participant1 }}</span>
           </div>
-          <div class="editor__field">
+          <div class="editor__field" :class="{ 'editor__field--error': fieldErrors(match).participant2 }">
             <label :for="`match-${i}-p2`">Participant 2</label>
             <input
               :id="`match-${i}-p2`"
@@ -58,18 +60,18 @@
               placeholder="Team or player name"
               @input="emitUpdate"
             />
+            <span v-if="fieldErrors(match).participant2" class="editor__field-error">{{ fieldErrors(match).participant2 }}</span>
           </div>
-          <div class="editor__field editor__field--score">
+          <div class="editor__field editor__field--score" :class="{ 'editor__field--error': fieldErrors(match).score }">
             <label :for="`match-${i}-score`">Score</label>
             <input
               :id="`match-${i}-score`"
               :value="scoreToString(match.score)"
               @input="updateScore(i, ($event.target as HTMLInputElement).value)"
-              placeholder="e.g. 2:1 or 3:0,25:23,25:19"
+              :placeholder="scorePlaceholder(match.sport)"
             />
-            <span class="editor__hint" v-if="match.sport === 'basketball'">
-              Array format: [["9:7","2:1"],["5:3","9:9"]]
-            </span>
+            <span v-if="fieldErrors(match).score" class="editor__field-error">{{ fieldErrors(match).score }}</span>
+            <span v-else-if="scoreHint(match.sport)" class="editor__hint">{{ scoreHint(match.sport) }}</span>
           </div>
         </div>
         <div v-if="props.errors?.[i]?.error" class="editor__error">
@@ -98,8 +100,11 @@
 <script setup lang="ts">
 import { ref, watch, onBeforeUnmount } from 'vue';
 import type { RawMatch, Score } from '@sc-test/shared';
+import { SPORT_CONFIG } from '@sc-test/shared';
 import type { ParseResult } from '../../utils/parseMatchClient';
 import { DEFAULT_RAW_MATCHES } from '../../data/defaultMatches';
+
+const KNOWN_SPORTS = Object.keys(SPORT_CONFIG);
 
 function cloneMatches(matches: RawMatch[]): RawMatch[] {
   return JSON.parse(JSON.stringify(matches));
@@ -166,8 +171,79 @@ function resetToDefault() {
   emit('update:modelValue', fresh);
 }
 
+interface FieldErrors {
+  sport: string;
+  participant1: string;
+  participant2: string;
+  score: string;
+}
+
+function validateScore(score: Score | null | undefined, sport: string): string {
+  if (score == null || score === '') return 'Required';
+  const config = SPORT_CONFIG[sport];
+  if (!config) return '';
+
+  if (sport === 'basketball') {
+    if (!Array.isArray(score)) return 'Must be a 2D array, e.g. [["9:7","2:1"]]';
+    const flat = (score as string[][]).flat();
+    if (flat.length === 0) return 'Array must not be empty';
+    if (!flat.every(s => /^\d+:\d+$/.test(s))) return 'Each entry must be digits:digits';
+    return '';
+  }
+
+  if (typeof score !== 'string') return 'Must be a string';
+
+  if (sport === 'volleyball' || sport === 'tennis') {
+    const parts = score.split(',');
+    if (parts.length < 2) return 'Format: main,set1,set2… e.g. 3:0,25:23,25:19';
+    if (!parts.every(p => /^\d+:\d+$/.test(p.trim()))) return 'Each part must be digits:digits';
+    return '';
+  }
+
+  // soccer, handball — simple passthrough
+  if (!/^\d+:\d+$/.test(score.trim())) return 'Format: digits:digits e.g. 2:1';
+  return '';
+}
+
+function fieldErrors(match: RawMatch): FieldErrors {
+  return {
+    sport: !match.sport ? 'Required' : (!KNOWN_SPORTS.includes(match.sport) ? `Unknown (valid: ${KNOWN_SPORTS.join(', ')})` : ''),
+    participant1: !match.participant1 ? 'Required' : '',
+    participant2: !match.participant2 ? 'Required' : '',
+    score: validateScore(match.score, match.sport),
+  };
+}
+
+function scorePlaceholder(sport: string): string {
+  switch (sport) {
+    case 'volleyball':
+    case 'tennis':
+      return 'e.g. 3:0,25:23,25:19,25:21';
+    case 'basketball':
+      return '[["9:7","2:1"],["5:3","9:9"]]';
+    case 'soccer':
+    case 'handball':
+      return 'e.g. 2:1';
+    default:
+      return 'e.g. 2:1';
+  }
+}
+
+function scoreHint(sport: string): string {
+  switch (sport) {
+    case 'volleyball':
+    case 'tennis':
+      return 'main,set1,set2… (comma-separated)';
+    case 'basketball':
+      return '2D array: [["q1","q2"],["q3","q4"]]';
+    default:
+      return '';
+  }
+}
+
 function isValid(match: RawMatch): boolean {
-  return !!(match.sport && match.participant1 && match.participant2 && match.score != null);
+  const errs = fieldErrors(match);
+  return !errs.sport && !errs.participant1 && !errs.participant2 && !errs.score;
 }
 
 const jsonDebounce = ref<ReturnType<typeof setTimeout>>();
@@ -314,6 +390,11 @@ function onJsonInput(e: Event) {
       position: relative;
     }
 
+    &--error {
+      label { color: $sc-red; }
+      input { border-color: $sc-red; }
+    }
+
     label {
       font-size: 11px;
       font-weight: 700;
@@ -334,6 +415,12 @@ function onJsonInput(e: Event) {
         border-color: $sc-purple-light;
       }
     }
+  }
+
+  &__field-error {
+    font-size: 10px;
+    font-weight: 600;
+    color: $sc-red;
   }
 
   &__hint {
