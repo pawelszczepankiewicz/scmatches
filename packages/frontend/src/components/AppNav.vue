@@ -25,7 +25,7 @@ import { useRoute } from 'vue-router';
 const route = useRoute();
 
 const links = [
-  { to: '/', label: 'Dashboard', exact: true },
+  { to: '/', label: 'Demo', exact: true },
   { to: '/showcase', label: 'Showcase', exact: false },
 ];
 

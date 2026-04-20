@@ -5,9 +5,9 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      name: 'dashboard',
-      component: () => import('../pages/DashboardPage.vue'),
-      meta: { title: 'Live Dashboard' },
+      name: 'demo',
+      component: () => import('../pages/TransformDemoPage.vue'),
+      meta: { title: 'Refactoring Demo' },
     },
     {
       path: '/showcase',
