@@ -8,7 +8,11 @@ export function parseMatch(match: RawMatch): ParsedMatch | null {
   }
 
   const name = `${match.participant1}${config.nameSeparator}${match.participant2}`;
-  const score = config.formatScore(match.score);
 
-  return { name, score };
+  try {
+    const score = config.formatScore(match.score);
+    return { name, score };
+  } catch {
+    return null;
+  }
 }

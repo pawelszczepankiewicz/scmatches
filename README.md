@@ -35,7 +35,7 @@ npm run dev:frontend   # Vue on :5173
 
 ## AI-Assisted Development
 
-Additional project ([`fullstack solution`](packages/)) was built with the help of [Claude Code](https://claude.ai) (AI pair programming).
+Additional project ([`fullstack solution in /packages/`](packages/)) was built with the help of [Claude Code](https://claude.ai) (AI pair programming).
 
 **What I decided:**
 

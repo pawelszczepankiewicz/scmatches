@@ -6,7 +6,7 @@
     "indexes": "firestore.indexes.json"
   },
   "apphosting": {
-    "backendId": "statscore-dash-backend",
+    "backendId": "statscore-dash",
     "rootDir": "/",
     "ignore": [
       "node_modules",

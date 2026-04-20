@@ -5,7 +5,7 @@ export function useSocket() {
   const connected = ref(false);
   const wsUrl = import.meta.env.VITE_WS_URL || (import.meta.env.DEV ? 'http://localhost:3000' : undefined);
   const socket: Socket = io(wsUrl as string, {
-    transports: ['websocket', 'polling'],
+    transports: ['polling', 'websocket'],
     reconnection: true,
     reconnectionDelay: 1000,
     reconnectionAttempts: 10,
