@@ -1,10 +1,8 @@
 import { ref, onMounted } from 'vue';
-import { useSocket } from './useSocket';
 export function useMatches() {
     const matches = ref([]);
     const loading = ref(true);
     const error = ref(null);
-    const { socket, connected } = useSocket();
     async function fetchMatches() {
         try {
             loading.value = true;
@@ -21,15 +19,6 @@ export function useMatches() {
             loading.value = false;
         }
     }
-    socket.on('score:update', (updated) => {
-        const idx = matches.value.findIndex((m) => m.id === updated.id);
-        if (idx !== -1) {
-            matches.value[idx] = updated;
-        }
-        else {
-            matches.value.push(updated);
-        }
-    });
     onMounted(fetchMatches);
-    return { matches, loading, error, connected, socket, refetch: fetchMatches };
+    return { matches, loading, error, refetch: fetchMatches };
 }

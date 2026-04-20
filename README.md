@@ -7,7 +7,7 @@ A refactoring of the Statscore coding exercise, delivered in two forms:
 | Folder                                     | Description                                                                                                                                              |
 | ------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | [`simple-solution/`](simple-solution/)     | Standalone TypeScript refactoring of `app.js` - clean architecture, 18 tests, no frameworks. **Start here** to see the core refactoring.                 |
-| [`packages/`](packages/)                   | Full-stack application (Vue 3 + NestJS + Firestore) - live match dashboard with real-time WebSocket updates, REST API, and a technical showcase section. |
+| [`packages/`](packages/)                   | Full-stack application (Vue 3 + NestJS + Firestore) - live match dashboard with REST API and a technical showcase section.                               |
 | [`original-exercise/`](original-exercise/) | The original unmodified `app.js` and task description.                                                                                                   |
 
 ## Quick Links
@@ -42,7 +42,7 @@ Additional project ([`fullstack solution in /packages/`](packages/)) was built w
 **What I decided:**
 
 - Architecture: monorepo with shared package, NestJS + Vue, config-driven dispatch pattern
-- Tech stack choices: Firestore, Socket.io, SCSS with design tokens
+- Tech stack choices: Firestore, SCSS with design tokens
 - UI/UX direction: scoreboard layout, page routing structure
 - What to build and what to skip - scoping each feature to stay production-aware without over-engineering
 

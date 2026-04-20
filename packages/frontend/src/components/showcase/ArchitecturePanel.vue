@@ -6,28 +6,21 @@
         <div class="arch__tech">Vue 3 + TypeScript + SCSS</div>
         <ul class="arch__list">
           <li>Reactive match dashboard</li>
-          <li>Socket.io client with auto-reconnect</li>
           <li>Statscore design system</li>
         </ul>
       </div>
       <div class="arch__arrows">
         <div class="arch__arrow">
-          <span>REST</span>
-          <span class="arch__line arch__line--h">&rarr;</span>
-          <span class="arch__line arch__line--v">&darr;</span>
-        </div>
-        <div class="arch__arrow">
-          <span class="arch__line arch__line--h">&larr;</span>
-          <span class="arch__line arch__line--v">&uarr;</span>
-          <span>WebSocket</span>
+          <span>REST API</span>
+          <span class="arch__line arch__line--h">&harr;</span>
+          <span class="arch__line arch__line--v">&updownarrow;</span>
         </div>
       </div>
       <div class="arch__box arch__box--backend">
         <div class="arch__label">Backend</div>
-        <div class="arch__tech">NestJS + Socket.io</div>
+        <div class="arch__tech">NestJS + REST API</div>
         <ul class="arch__list">
           <li>Config-driven sport parsing</li>
-          <li>WebSocket gateway</li>
           <li>Helmet + CORS + rate limiting</li>
           <li>class-validator DTOs</li>
         </ul>
@@ -43,7 +36,7 @@
         <div class="arch__label">Firestore</div>
         <div class="arch__tech">Firebase (statscoreapp)</div>
         <ul class="arch__list">
-          <li>Real-time onSnapshot listener</li>
+          <li>Document-based storage</li>
           <li>In-memory fallback when offline</li>
         </ul>
       </div>
@@ -72,16 +65,12 @@ const features = [
     desc: 'Helmet headers, CORS whitelist, @nestjs/throttler rate limiting, ValidationPipe.',
   },
   {
-    title: 'Real-Time WebSocket',
-    desc: 'Score changes broadcast instantly via Socket.io gateway with auto-reconnect.',
-  },
-  {
     title: 'Shared Types',
     desc: 'Monorepo @sc-test/shared package ensures type safety across frontend & backend.',
   },
   {
     title: 'Firestore + Fallback',
-    desc: 'Firebase Firestore with onSnapshot. Falls back to in-memory when credentials unavailable.',
+    desc: 'Firebase Firestore for persistence. Falls back to in-memory when credentials unavailable.',
   },
   {
     title: 'Input Validation',

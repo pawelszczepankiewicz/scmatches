@@ -22,10 +22,6 @@
 <script setup lang="ts">
 import { useRoute } from 'vue-router';
 
-defineProps<{
-  connected: boolean;
-}>();
-
 const route = useRoute();
 
 const links = [

@@ -1,6 +1,5 @@
 import { Injectable, Logger, OnModuleInit } from '@nestjs/common';
 import { FirestoreService } from '../firestore/firestore.service';
-import { MatchesGateway } from './matches.gateway';
 import { SPORT_CONFIG } from '@sc-test/shared';
 import type { RawMatch, ParsedMatch, Score, SportType } from '@sc-test/shared';
 
@@ -47,16 +46,12 @@ export class MatchesService implements OnModuleInit {
   private readonly logger = new Logger(MatchesService.name);
   private inMemoryMatches: Map<string, RawMatch & { isLive: boolean }> = new Map();
 
-  constructor(
-    private firestore: FirestoreService,
-    private gateway: MatchesGateway,
-  ) {}
+  constructor(private firestore: FirestoreService) {}
 
   async onModuleInit() {
     if (this.firestore.ready) {
       try {
         await this.seedIfEmpty();
-        this.listenForChanges();
         return;
       } catch (err) {
         this.logger.warn(`Firestore unavailable: ${err}. Falling back to in-memory.`);
@@ -97,22 +92,6 @@ export class MatchesService implements OnModuleInit {
 
     await batch.commit();
     this.logger.log(`Seeded ${SEED_DATA.length} matches`);
-  }
-
-  private listenForChanges() {
-    this.firestore.onSnapshot(COLLECTION, (snapshot) => {
-      for (const change of snapshot.docChanges()) {
-        if (change.type === 'modified') {
-          const data = change.doc.data();
-          const parsed = this.formatMatch(change.doc.id, data as RawMatch & { isLive?: boolean });
-          if (parsed) {
-            this.gateway.broadcastScoreUpdate(parsed);
-            this.logger.log(`Score update broadcast for match ${change.doc.id}`);
-          }
-        }
-      }
-    });
-    this.logger.log('Listening for Firestore match changes');
   }
 
   formatMatch(id: string, raw: RawMatch & { isLive?: boolean; score?: Score | string }): ParsedMatch | null {
@@ -210,10 +189,6 @@ export class MatchesService implements OnModuleInit {
     if (!match) return null;
 
     match.score = score;
-    const parsed = this.formatMatch(matchId, match);
-    if (parsed) {
-      this.gateway.broadcastScoreUpdate(parsed);
-    }
-    return parsed;
+    return this.formatMatch(matchId, match);
   }
 }

@@ -1,5 +1,4 @@
 import { useRoute } from 'vue-router';
-const __VLS_props = defineProps();
 const route = useRoute();
 const links = [
     { to: '/', label: 'Dashboard', exact: true },
@@ -77,12 +76,10 @@ const __VLS_self = (await import('vue')).defineComponent({
             isActive: isActive,
         };
     },
-    __typeProps: {},
 });
 export default (await import('vue')).defineComponent({
     setup() {
         return {};
     },
-    __typeProps: {},
 });
 ; /* PartiallyEnd: #4569/main.vue */

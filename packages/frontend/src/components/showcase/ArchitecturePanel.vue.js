@@ -8,16 +8,12 @@ const features = [
         desc: 'Helmet headers, CORS whitelist, @nestjs/throttler rate limiting, ValidationPipe.',
     },
     {
-        title: 'Real-Time WebSocket',
-        desc: 'Score changes broadcast instantly via Socket.io gateway with auto-reconnect.',
-    },
-    {
         title: 'Shared Types',
         desc: 'Monorepo @sc-test/shared package ensures type safety across frontend & backend.',
     },
     {
         title: 'Firestore + Fallback',
-        desc: 'Firebase Firestore with onSnapshot. Falls back to in-memory when credentials unavailable.',
+        desc: 'Firebase Firestore for persistence. Falls back to in-memory when credentials unavailable.',
     },
     {
         title: 'Input Validation',
@@ -58,7 +54,6 @@ __VLS_asFunctionalElement(__VLS_intrinsicElements.ul, __VLS_intrinsicElements.ul
 });
 __VLS_asFunctionalElement(__VLS_intrinsicElements.li, __VLS_intrinsicElements.li)({});
 __VLS_asFunctionalElement(__VLS_intrinsicElements.li, __VLS_intrinsicElements.li)({});
-__VLS_asFunctionalElement(__VLS_intrinsicElements.li, __VLS_intrinsicElements.li)({});
 __VLS_asFunctionalElement(__VLS_intrinsicElements.div, __VLS_intrinsicElements.div)({
     ...{ class: "arch__arrows" },
 });
@@ -73,16 +68,6 @@ __VLS_asFunctionalElement(__VLS_intrinsicElements.span, __VLS_intrinsicElements.
     ...{ class: "arch__line arch__line--v" },
 });
 __VLS_asFunctionalElement(__VLS_intrinsicElements.div, __VLS_intrinsicElements.div)({
-    ...{ class: "arch__arrow" },
-});
-__VLS_asFunctionalElement(__VLS_intrinsicElements.span, __VLS_intrinsicElements.span)({
-    ...{ class: "arch__line arch__line--h" },
-});
-__VLS_asFunctionalElement(__VLS_intrinsicElements.span, __VLS_intrinsicElements.span)({
-    ...{ class: "arch__line arch__line--v" },
-});
-__VLS_asFunctionalElement(__VLS_intrinsicElements.span, __VLS_intrinsicElements.span)({});
-__VLS_asFunctionalElement(__VLS_intrinsicElements.div, __VLS_intrinsicElements.div)({
     ...{ class: "arch__box arch__box--backend" },
 });
 __VLS_asFunctionalElement(__VLS_intrinsicElements.div, __VLS_intrinsicElements.div)({
@@ -94,7 +79,6 @@ __VLS_asFunctionalElement(__VLS_intrinsicElements.div, __VLS_intrinsicElements.d
 __VLS_asFunctionalElement(__VLS_intrinsicElements.ul, __VLS_intrinsicElements.ul)({
     ...{ class: "arch__list" },
 });
-__VLS_asFunctionalElement(__VLS_intrinsicElements.li, __VLS_intrinsicElements.li)({});
 __VLS_asFunctionalElement(__VLS_intrinsicElements.li, __VLS_intrinsicElements.li)({});
 __VLS_asFunctionalElement(__VLS_intrinsicElements.li, __VLS_intrinsicElements.li)({});
 __VLS_asFunctionalElement(__VLS_intrinsicElements.li, __VLS_intrinsicElements.li)({});
@@ -154,11 +138,6 @@ for (const [f] of __VLS_getVForSourceType((__VLS_ctx.features))) {
 /** @type {__VLS_StyleScopedClasses['arch__tech']} */ ;
 /** @type {__VLS_StyleScopedClasses['arch__list']} */ ;
 /** @type {__VLS_StyleScopedClasses['arch__arrows']} */ ;
-/** @type {__VLS_StyleScopedClasses['arch__arrow']} */ ;
-/** @type {__VLS_StyleScopedClasses['arch__line']} */ ;
-/** @type {__VLS_StyleScopedClasses['arch__line--h']} */ ;
-/** @type {__VLS_StyleScopedClasses['arch__line']} */ ;
-/** @type {__VLS_StyleScopedClasses['arch__line--v']} */ ;
 /** @type {__VLS_StyleScopedClasses['arch__arrow']} */ ;
 /** @type {__VLS_StyleScopedClasses['arch__line']} */ ;
 /** @type {__VLS_StyleScopedClasses['arch__line--h']} */ ;

@@ -14,12 +14,6 @@
 
     <div class="showcase__panel">
       <ApiExplorer v-if="activeTab === 'api'" :matches="matches" />
-      <WebSocketMonitor
-        v-else-if="activeTab === 'ws'"
-        :socket="socket"
-        :connected="connected"
-        :matches="matches"
-      />
       <ArchitecturePanel v-else-if="activeTab === 'arch'" />
     </div>
   </section>
@@ -27,21 +21,16 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import type { Socket } from 'socket.io-client';
 import type { ParsedMatch } from '@sc-test/shared';
 import ApiExplorer from './ApiExplorer.vue';
-import WebSocketMonitor from './WebSocketMonitor.vue';
 import ArchitecturePanel from './ArchitecturePanel.vue';
 
 defineProps<{
-  socket: Socket;
-  connected: boolean;
   matches: ParsedMatch[];
 }>();
 
 const tabs = [
   { id: 'api', label: 'API Explorer' },
-  { id: 'ws', label: 'WebSocket Monitor' },
   { id: 'arch', label: 'Architecture' },
 ];
 

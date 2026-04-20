@@ -1,12 +1,10 @@
 import { ref, onMounted } from 'vue';
 import type { ParsedMatch } from '@sc-test/shared';
-import { useSocket } from './useSocket';
 
 export function useMatches() {
   const matches = ref<ParsedMatch[]>([]);
   const loading = ref(true);
   const error = ref<string | null>(null);
-  const { socket, connected } = useSocket();
 
   async function fetchMatches() {
     try {
@@ -22,16 +20,7 @@ export function useMatches() {
     }
   }
 
-  socket.on('score:update', (updated: ParsedMatch) => {
-    const idx = matches.value.findIndex((m) => m.id === updated.id);
-    if (idx !== -1) {
-      matches.value[idx] = updated;
-    } else {
-      matches.value.push(updated);
-    }
-  });
-
   onMounted(fetchMatches);
 
-  return { matches, loading, error, connected, socket, refetch: fetchMatches };
+  return { matches, loading, error, refetch: fetchMatches };
 }

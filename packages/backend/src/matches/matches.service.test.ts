@@ -2,7 +2,6 @@ import { MatchesService } from './matches.service';
 import type { RawMatch } from '@sc-test/shared';
 
 // Minimal mock to test formatMatch independently
-const mockGateway = { broadcastScoreUpdate: jest.fn() };
 const mockFirestore = {
   collection: jest.fn(),
   onSnapshot: jest.fn(),
@@ -12,7 +11,7 @@ describe('MatchesService.formatMatch', () => {
   let service: MatchesService;
 
   beforeEach(() => {
-    service = new MatchesService(mockFirestore as any, mockGateway as any);
+    service = new MatchesService(mockFirestore as any);
   });
 
   it('formats soccer match', () => {

@@ -1,11 +1,9 @@
 import { ref } from 'vue';
 import ApiExplorer from './ApiExplorer.vue';
-import WebSocketMonitor from './WebSocketMonitor.vue';
 import ArchitecturePanel from './ArchitecturePanel.vue';
 const __VLS_props = defineProps();
 const tabs = [
     { id: 'api', label: 'API Explorer' },
-    { id: 'ws', label: 'WebSocket Monitor' },
     { id: 'arch', label: 'Architecture' },
 ];
 const activeTab = ref('api');
@@ -45,25 +43,11 @@ if (__VLS_ctx.activeTab === 'api') {
         matches: (__VLS_ctx.matches),
     }, ...__VLS_functionalComponentArgsRest(__VLS_0));
 }
-else if (__VLS_ctx.activeTab === 'ws') {
-    /** @type {[typeof WebSocketMonitor, ]} */ ;
-    // @ts-ignore
-    const __VLS_3 = __VLS_asFunctionalComponent(WebSocketMonitor, new WebSocketMonitor({
-        socket: (__VLS_ctx.socket),
-        connected: (__VLS_ctx.connected),
-        matches: (__VLS_ctx.matches),
-    }));
-    const __VLS_4 = __VLS_3({
-        socket: (__VLS_ctx.socket),
-        connected: (__VLS_ctx.connected),
-        matches: (__VLS_ctx.matches),
-    }, ...__VLS_functionalComponentArgsRest(__VLS_3));
-}
 else if (__VLS_ctx.activeTab === 'arch') {
     /** @type {[typeof ArchitecturePanel, ]} */ ;
     // @ts-ignore
-    const __VLS_6 = __VLS_asFunctionalComponent(ArchitecturePanel, new ArchitecturePanel({}));
-    const __VLS_7 = __VLS_6({}, ...__VLS_functionalComponentArgsRest(__VLS_6));
+    const __VLS_3 = __VLS_asFunctionalComponent(ArchitecturePanel, new ArchitecturePanel({}));
+    const __VLS_4 = __VLS_3({}, ...__VLS_functionalComponentArgsRest(__VLS_3));
 }
 /** @type {__VLS_StyleScopedClasses['showcase']} */ ;
 /** @type {__VLS_StyleScopedClasses['showcase__tabs']} */ ;
@@ -74,7 +58,6 @@ const __VLS_self = (await import('vue')).defineComponent({
     setup() {
         return {
             ApiExplorer: ApiExplorer,
-            WebSocketMonitor: WebSocketMonitor,
             ArchitecturePanel: ArchitecturePanel,
             tabs: tabs,
             activeTab: activeTab,

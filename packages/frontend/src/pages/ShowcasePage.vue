@@ -1,10 +1,10 @@
 <template>
-  <ShowcaseSection :socket="socket" :connected="connected" :matches="matches" />
+  <ShowcaseSection :matches="matches" />
 </template>
 
 <script setup lang="ts">
 import ShowcaseSection from '../components/showcase/ShowcaseSection.vue';
 import { useMatches } from '../composables/useMatches';
 
-const { matches, connected, socket } = useMatches();
+const { matches } = useMatches();
 </script>
