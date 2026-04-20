@@ -43,7 +43,7 @@
     </div>
 
     <div class="arch__features">
-      <h3>Production-Grade Features</h3>
+      <h3>Features</h3>
       <div class="arch__grid">
         <div class="arch__feature" v-for="f in features" :key="f.title">
           <div class="arch__feature-title">{{ f.title }}</div>
@@ -57,32 +57,32 @@
 <script setup lang="ts">
 const features = [
   {
-    title: 'Config-Driven Parsing',
-    desc: 'Single SPORT_CONFIG map replaces all if/else chains. Adding a new sport = one line.',
+    title: "Config-Driven Parsing",
+    desc: "Single SPORT_CONFIG map replaces all if/else chains. Adding a new sport = one line.",
   },
   {
-    title: 'Security Essentials',
-    desc: 'Helmet headers, CORS whitelist, @nestjs/throttler rate limiting, ValidationPipe.',
+    title: "Security Essentials",
+    desc: "Helmet headers, CORS whitelist, @nestjs/throttler rate limiting, ValidationPipe.",
   },
   {
-    title: 'Shared Types',
-    desc: 'Monorepo @sc-test/shared package ensures type safety across frontend & backend.',
+    title: "Shared Types",
+    desc: "Monorepo @sc-test/shared package ensures type safety across frontend & backend.",
   },
   {
-    title: 'Firestore + Fallback',
-    desc: 'Firebase Firestore for persistence. Falls back to in-memory when credentials unavailable.',
+    title: "Firestore + Fallback",
+    desc: "Firebase Firestore for persistence. Falls back to in-memory when credentials unavailable.",
   },
   {
-    title: 'Input Validation',
-    desc: 'class-validator DTOs with whitelist + forbidNonWhitelisted on all endpoints.',
+    title: "Input Validation",
+    desc: "class-validator DTOs with whitelist + forbidNonWhitelisted on all endpoints.",
   },
   {
-    title: 'npm Workspaces',
-    desc: 'Monorepo with shared/, backend/, frontend/ packages. Single npm install.',
+    title: "npm Workspaces",
+    desc: "Monorepo with shared/, backend/, frontend/ packages. Single npm install.",
   },
   {
-    title: 'Dual CJS/ESM Build',
-    desc: 'Shared package builds to both CommonJS (NestJS) and ESM (Vite) targets.',
+    title: "Dual CJS/ESM Build",
+    desc: "Shared package builds to both CommonJS (NestJS) and ESM (Vite) targets.",
   },
 ];
 </script>
@@ -112,9 +112,15 @@ const features = [
     flex: 1;
     border-top: 3px solid $sc-gray;
 
-    &--frontend { border-top-color: $sc-green; }
-    &--backend { border-top-color: $sc-purple; }
-    &--db { border-top-color: #F59E0B; }
+    &--frontend {
+      border-top-color: $sc-green;
+    }
+    &--backend {
+      border-top-color: $sc-purple;
+    }
+    &--db {
+      border-top-color: #f59e0b;
+    }
 
     @include mobile {
       min-width: 0;
@@ -182,12 +188,16 @@ const features = [
     color: $sc-purple-light;
 
     &--h {
-      @include mobile { display: none; }
+      @include mobile {
+        display: none;
+      }
     }
 
     &--v {
       display: none;
-      @include mobile { display: inline; }
+      @include mobile {
+        display: inline;
+      }
     }
   }
 

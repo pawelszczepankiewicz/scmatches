@@ -1,6 +1,13 @@
 <template>
   <section class="engine">
     <h2 class="engine__title">How It Works</h2>
+    <p class="engine__intro">
+      Instead of branching on sport names with if/else chains, the refactored solution uses a
+      single config map (<code>SPORT_CONFIG</code>) that maps each sport to its formatting rules.
+      The <code>parseMatch()</code> function looks up the config, applies the formatter, and returns
+      a clean result — or <code>null</code> for invalid entries. This makes the code easy to extend,
+      test, and reason about.
+    </p>
 
     <div class="engine__pipeline">
       <div class="engine__step">
@@ -44,6 +51,11 @@
 
     <div class="engine__code">
       <h3>parseMatch()</h3>
+      <p class="engine__desc">
+        The core function that replaces the original 90-line <code>EventParser</code> class.
+        It validates the input, looks up the sport config, and delegates formatting — all in ~10 lines.
+        Invalid or unknown entries return <code>null</code> and get filtered out.
+      </p>
       <pre><code>{{ parseMatchCode }}</code></pre>
     </div>
   </section>
@@ -78,7 +90,22 @@ const parseMatchCode = `function parseMatch(match: RawMatch): ParsedMatch | null
 .engine {
   &__title {
     font-size: 1.25rem;
-    margin-bottom: $space-lg;
+    margin-bottom: $space-sm;
+  }
+
+  &__intro {
+    font-size: 14px;
+    line-height: 1.7;
+    color: $sc-dark;
+    margin-bottom: $space-xl;
+
+    code {
+      background: $sc-lavender;
+      padding: 2px 6px;
+      border-radius: 3px;
+      color: $sc-purple;
+      font-size: 13px;
+    }
   }
 
   &__pipeline {
@@ -138,11 +165,16 @@ const parseMatchCode = `function parseMatch(match: RawMatch): ParsedMatch | null
     margin-bottom: $space-xl;
 
     h3 { margin-bottom: $space-sm; }
+
+    @include mobile {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
   }
 
   &__desc {
     font-size: 13px;
-    color: $sc-gray;
+    color: $sc-dark;
     margin-bottom: $space-md;
   }
 
@@ -151,10 +183,19 @@ const parseMatchCode = `function parseMatch(match: RawMatch): ParsedMatch | null
     border-collapse: collapse;
     font-size: 13px;
 
+    @include mobile {
+      font-size: 11px;
+      min-width: 400px;
+    }
+
     th, td {
       padding: $space-sm $space-md;
       text-align: left;
       border-bottom: 1px solid darken($sc-gray-light, 6%);
+
+      @include mobile {
+        padding: $space-xs $space-sm;
+      }
     }
 
     th {
@@ -163,6 +204,10 @@ const parseMatchCode = `function parseMatch(match: RawMatch): ParsedMatch | null
       text-transform: uppercase;
       color: $sc-gray;
       background: $sc-gray-light;
+
+      @include mobile {
+        font-size: 10px;
+      }
     }
 
     code {
@@ -171,6 +216,12 @@ const parseMatchCode = `function parseMatch(match: RawMatch): ParsedMatch | null
       border-radius: 3px;
       font-size: 12px;
       color: $sc-purple;
+      word-break: break-all;
+
+      @include mobile {
+        font-size: 10px;
+        padding: 1px 4px;
+      }
     }
   }
 
@@ -183,8 +234,15 @@ const parseMatchCode = `function parseMatch(match: RawMatch): ParsedMatch | null
       padding: $space-md;
       border-radius: $radius-md;
       overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
       font-size: 12px;
       line-height: 1.7;
+
+      @include mobile {
+        font-size: 11px;
+        padding: $space-sm;
+        line-height: 1.5;
+      }
     }
   }
 }

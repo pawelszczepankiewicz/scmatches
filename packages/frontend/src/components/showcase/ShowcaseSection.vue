@@ -78,6 +78,11 @@ const activeTab = ref('api');
     &--active {
       color: $sc-dark;
       background: $sc-green;
+
+      &:hover {
+        background: $sc-green-dark;
+        color: $sc-white;
+      }
     }
 
     @include mobile {

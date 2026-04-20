@@ -68,6 +68,9 @@
             </span>
           </div>
         </div>
+        <div v-if="props.errors?.[i]?.error" class="editor__error">
+          {{ props.errors[i].error }}
+        </div>
       </div>
 
       <button class="btn btn--primary editor__add" @click="addMatch">
@@ -91,10 +94,12 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue';
 import type { RawMatch, Score } from '@sc-test/shared';
+import type { ParseResult } from '../../utils/parseMatchClient';
 import { DEFAULT_RAW_MATCHES } from '../../data/defaultMatches';
 
 const props = defineProps<{
   modelValue: RawMatch[];
+  errors?: ParseResult[];
 }>();
 
 const emit = defineEmits<{
@@ -102,17 +107,17 @@ const emit = defineEmits<{
 }>();
 
 const mode = ref<'form' | 'json'>('form');
-const localMatches = ref<RawMatch[]>(structuredClone(props.modelValue));
+const localMatches = ref<RawMatch[]>(JSON.parse(JSON.stringify(props.modelValue)));
 const jsonText = ref(JSON.stringify(props.modelValue, null, 2));
 const jsonError = ref<string | null>(null);
 
 watch(() => props.modelValue, (val) => {
-  localMatches.value = structuredClone(val);
+  localMatches.value = JSON.parse(JSON.stringify(val));
   jsonText.value = JSON.stringify(val, null, 2);
 }, { deep: true });
 
 function emitUpdate() {
-  emit('update:modelValue', structuredClone(localMatches.value));
+  emit('update:modelValue', JSON.parse(JSON.stringify(localMatches.value)));
 }
 
 function scoreToString(score: Score | null | undefined): string {
@@ -148,7 +153,7 @@ function removeMatch(index: number) {
 }
 
 function resetToDefault() {
-  const fresh = structuredClone(DEFAULT_RAW_MATCHES);
+  const fresh = JSON.parse(JSON.stringify(DEFAULT_RAW_MATCHES));
   localMatches.value = fresh;
   emit('update:modelValue', fresh);
 }
@@ -245,6 +250,17 @@ function onJsonInput(e: Event) {
     &--invalid {
       border-left-color: $sc-red;
     }
+  }
+
+  &__error {
+    margin-top: $space-sm;
+    padding: $space-xs $space-sm;
+    background: rgba($sc-red, 0.06);
+    border-left: 2px solid $sc-red;
+    border-radius: $radius-sm;
+    font-size: 12px;
+    font-weight: 600;
+    color: $sc-red;
   }
 
   &__remove {

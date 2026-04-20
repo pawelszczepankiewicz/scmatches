@@ -161,8 +161,16 @@ const consoleOutput = computed(() => {
     font-size: 12px;
     line-height: 1.6;
     overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
     max-height: 500px;
     overflow-y: auto;
+    word-break: break-word;
+
+    @include mobile {
+      font-size: 11px;
+      padding: $space-sm;
+      max-height: 300px;
+    }
   }
 }
 </style>

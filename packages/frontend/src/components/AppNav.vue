@@ -2,7 +2,8 @@
   <nav class="app-nav">
     <div class="app-nav__inner">
       <RouterLink to="/" class="app-nav__brand">
-        <span>stats</span><span class="app-nav__brand-o">d</span><span>ash</span>
+        <span>stats</span><span class="app-nav__brand-o">d</span
+        ><span>ash</span>
       </RouterLink>
       <div class="app-nav__links">
         <RouterLink
@@ -20,13 +21,15 @@
 </template>
 
 <script setup lang="ts">
-import { useRoute } from 'vue-router';
+import { useRoute } from "vue-router";
 
 const route = useRoute();
 
 const links = [
-  { to: '/', label: 'Demo', exact: true },
-  { to: '/showcase', label: 'Showcase', exact: false },
+  { to: "/", label: "Demo", exact: true },
+  { to: "/how-it-works", label: "How It Works", exact: false },
+  { to: "/problems", label: "Problems", exact: false },
+  { to: "/showcase", label: "API", exact: false },
 ];
 
 function isActive(link: { to: string; exact: boolean }) {
