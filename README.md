@@ -8,12 +8,12 @@ A refactoring of the Statscore coding exercise, delivered in two forms:
 | ------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | [`simple-solution/`](simple-solution/)     | Standalone TypeScript refactoring of `app.js` — clean architecture, 18 tests, no frameworks. **Start here** to see the core refactoring.                 |
 | [`packages/`](packages/)                   | Full-stack application (Vue 3 + NestJS + Firestore) — live match dashboard with real-time WebSocket updates, REST API, and a technical showcase section. |
-| [`original-exercise/`](original-exercise/) | The original unmodified `app.js` and task description. See [`problems.md`](original-exercise/problems.md) for the 12 code issues identified.             |
+| [`original-exercise/`](original-exercise/) | The original unmodified `app.js` and task description.                                                                                                    |
 
 ## Quick Links
 
+- [Simple solution & problems analysis](simple-solution/README.md)
 - [Full-stack app details, architecture, and setup](packages/README.md)
-- [Original exercise problems analysis](original-exercise/problems.md)
 - [Original task description](original-exercise/README.md)
 
 ## Running the simple solution
