@@ -21,10 +21,6 @@ import { FirestoreModule } from './firestore/firestore.module';
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', '..', 'frontend', 'dist'),
       exclude: ['/api/(.*)'],
-      serveStaticOptions: {
-        index: ['index.html'],
-        fallthrough: false,
-      },
     }),
     FirestoreModule,
     MatchesModule,
