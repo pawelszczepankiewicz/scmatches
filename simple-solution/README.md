@@ -2,11 +2,11 @@
 
 ## 1. Repeated if/else logic
 
-Both `makeEventName()` and `formatScore()` branch on the same sport value. So every time you add a new sport, you have to update both places. Two sources of truth — not S(O)LID solution I would say.
+Both `makeEventName()` and `formatScore()` branch on the same sport value. So every time you add a new sport, you have to update both places. Two sources of truth - not S(O)LID solution I would say.
 
 ### Fix:
 
-Introduced a `SPORT_CONFIG` record in `sportConfig.ts` that maps each sport to its `nameSeparator` and `formatScore` function. Both pieces of sport specific logic live in one place — add a sport, add one config entry, done.
+Introduced a `SPORT_CONFIG` record in `sportConfig.ts` that maps each sport to its `nameSeparator` and `formatScore` function. Both pieces of sport specific logic live in one place - add a sport, add one config entry, done.
 
 ## 2. Duplicate code
 
@@ -22,7 +22,7 @@ The regex used for parsing scores assumes a fixed number of sets. If the format 
 
 ### Fix:
 
-Replaced the regex with a simple `score.split(‘,’)` approach in `setBasedFormatter`. It handles any number of sets dynamically — no assumptions about match length.
+Replaced the regex with a simple `score.split(‘,’)` approach in `setBasedFormatter`. It handles any number of sets dynamically - no assumptions about match length.
 
 ## 4. Hardcoded indexing
 
@@ -62,7 +62,7 @@ A new `EventParser` is created inside the loop even though it doesn’t keep any
 
 ### Fix:
 
-Replaced the stateless class with a plain function `parseMatch()`. No instantiation needed — it’s just a function call. The garbage collector is happy.
+Replaced the stateless class with a plain function `parseMatch()`. No instantiation needed - it’s just a function call. The garbage collector is happy.
 
 ## 9. Missing validation
 
@@ -90,8 +90,8 @@ Added `eventParser.test.ts` with unit tests for each formatter, integration test
 
 ## 12. Hard to extend
 
-Adding a new sport means modifying multiple parts of the code. Simple change, multiple touchpoints — only good when paid per line of code written.
+Adding a new sport means modifying multiple parts of the code. Simple change, multiple touchpoints - only good when paid per line of code written.
 
 ### Fix:
 
-Adding a new sport is now a single entry in `SPORT_CONFIG` — pick a separator, pick (or write) a formatter, done. No other files need to change.
+Adding a new sport is now a single entry in `SPORT_CONFIG` - pick a separator, pick (or write) a formatter, done. No other files need to change.
