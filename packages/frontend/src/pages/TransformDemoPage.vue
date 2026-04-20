@@ -2,13 +2,17 @@
   <div class="demo">
     <div class="demo__header">
       <p class="demo__intro">
-        The original <code>app.js</code> used nested if/else chains to format match data.
-        This form is parsed using the refactored config-driven approach — edit the raw input
-        and see the formatted output update live.
+        The original <code>app.js</code> used nested if/else chains to format
+        match data. This form is parsed using the refactored config-driven
+        approach - edit the raw input and see the formatted output update live.
       </p>
       <div class="demo__header-links">
-        <RouterLink to="/how-it-works" class="btn btn--accent">How It Works</RouterLink>
-        <RouterLink to="/problems" class="btn btn--primary">12 Problems Fixed</RouterLink>
+        <RouterLink to="/how-it-works" class="btn btn--accent"
+          >How It Works</RouterLink
+        >
+        <RouterLink to="/problems" class="btn btn--primary"
+          >12 Problems Fixed</RouterLink
+        >
       </div>
     </div>
 
@@ -21,17 +25,19 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue';
-import type { RawMatch } from '@sc-test/shared';
-import { DEFAULT_RAW_MATCHES } from '../data/defaultMatches';
-import { parseMatchClient } from '../utils/parseMatchClient';
-import RawDataEditor from '../components/demo/RawDataEditor.vue';
-import FormattedOutput from '../components/demo/FormattedOutput.vue';
+import { ref, computed } from "vue";
+import type { RawMatch } from "@sc-test/shared";
+import { DEFAULT_RAW_MATCHES } from "../data/defaultMatches";
+import { parseMatchClient } from "../utils/parseMatchClient";
+import RawDataEditor from "../components/demo/RawDataEditor.vue";
+import FormattedOutput from "../components/demo/FormattedOutput.vue";
 
-const rawMatches = ref<RawMatch[]>(JSON.parse(JSON.stringify(DEFAULT_RAW_MATCHES)));
+const rawMatches = ref<RawMatch[]>(
+  JSON.parse(JSON.stringify(DEFAULT_RAW_MATCHES)),
+);
 
 const parseResults = computed(() =>
-  rawMatches.value.map((m, i) => parseMatchClient(m, i))
+  rawMatches.value.map((m, i) => parseMatchClient(m, i)),
 );
 </script>
 
@@ -70,7 +76,7 @@ const parseResults = computed(() =>
 
   &__divider {
     height: 1px;
-    background: darken($sc-gray-light, 6%);
+    background: $sc-gray-border;
     margin: $space-xl 0;
   }
 }

@@ -1,18 +1,29 @@
 <template>
   <section class="showcase">
-    <nav class="showcase__tabs">
+    <div class="showcase__tabs" role="tablist" aria-label="Showcase sections">
       <button
         v-for="tab in tabs"
         :key="tab.id"
+        role="tab"
+        :id="`tab-${tab.id}`"
+        :aria-selected="activeTab === tab.id"
+        :aria-controls="`panel-${tab.id}`"
         class="showcase__tab"
         :class="{ 'showcase__tab--active': activeTab === tab.id }"
+        :tabindex="activeTab === tab.id ? 0 : -1"
         @click="activeTab = tab.id"
+        @keydown="onTabKeydown($event, tab.id)"
       >
         {{ tab.label }}
       </button>
-    </nav>
+    </div>
 
-    <div class="showcase__panel">
+    <div
+      class="showcase__panel"
+      role="tabpanel"
+      :id="`panel-${activeTab}`"
+      :aria-labelledby="`tab-${activeTab}`"
+    >
       <ApiExplorer v-if="activeTab === 'api'" :matches="matches" />
       <ArchitecturePanel v-else-if="activeTab === 'arch'" />
     </div>
@@ -35,6 +46,19 @@ const tabs = [
 ];
 
 const activeTab = ref('api');
+
+function onTabKeydown(e: KeyboardEvent, currentId: string) {
+  const ids = tabs.map(t => t.id);
+  const idx = ids.indexOf(currentId);
+  let nextIdx = -1;
+  if (e.key === 'ArrowRight') nextIdx = (idx + 1) % ids.length;
+  else if (e.key === 'ArrowLeft') nextIdx = (idx - 1 + ids.length) % ids.length;
+  if (nextIdx >= 0) {
+    e.preventDefault();
+    activeTab.value = ids[nextIdx];
+    (document.getElementById(`tab-${ids[nextIdx]}`) as HTMLElement)?.focus();
+  }
+}
 </script>
 
 <style scoped lang="scss">

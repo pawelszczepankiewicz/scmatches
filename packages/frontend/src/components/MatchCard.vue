@@ -23,48 +23,22 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
-import type { ParsedMatch } from '@sc-test/shared';
-import ScoreDisplay from './ScoreDisplay.vue';
+import { computed } from "vue";
+import type { ParsedMatch } from "@sc-test/shared";
+import ScoreDisplay from "./ScoreDisplay.vue";
+import { parseMainScores, parseSetDetails } from "../utils/scoreParser";
 
 const props = defineProps<{
   match: ParsedMatch;
 }>();
 
-const mainScores = computed(() => {
-  const raw = props.match.score;
+const mainScores = computed(() =>
+  parseMainScores(props.match.score, props.match.sport),
+);
 
-  // Set-based format: "Main score: 3:0 (set1 ...)"
-  if (raw.startsWith('Main score:')) {
-    const m = raw.match(/Main score:\s*(\d+):(\d+)/);
-    return m ? [m[1], m[2]] : [raw, ''];
-  }
-
-  // Basketball: "9:7,2:1,5:3,9:9" — show total or first pair
-  if (props.match.sport === 'basketball') {
-    // Sum all quarter scores per team
-    const quarters = raw.split(',');
-    let t1 = 0, t2 = 0;
-    for (const q of quarters) {
-      const [a, b] = q.split(':').map(Number);
-      t1 += a; t2 += b;
-    }
-    return [String(t1), String(t2)];
-  }
-
-  // Simple format: "2:1"
-  const parts = raw.split(':');
-  if (parts.length === 2) {
-    return [parts[0].trim(), parts[1].trim()];
-  }
-  return [raw, ''];
-});
-
-const hasSetDetails = computed(() => {
-  return props.match.sport === 'volleyball'
-    || props.match.sport === 'tennis'
-    || props.match.sport === 'basketball';
-});
+const hasSetDetails = computed(() =>
+  parseSetDetails(props.match.score, props.match.sport).length > 0,
+);
 </script>
 
 <style scoped lang="scss">
@@ -76,11 +50,21 @@ const hasSetDetails = computed(() => {
   display: flex;
   flex-direction: column;
 
-  &--soccer { border-left-color: #22C55E; }
-  &--volleyball { border-left-color: #F59E0B; }
-  &--handball { border-left-color: #3B82F6; }
-  &--basketball { border-left-color: #EF4444; }
-  &--tennis { border-left-color: $sc-green; }
+  &--soccer {
+    border-left-color: #22c55e;
+  }
+  &--volleyball {
+    border-left-color: #f59e0b;
+  }
+  &--handball {
+    border-left-color: #3b82f6;
+  }
+  &--basketball {
+    border-left-color: #ef4444;
+  }
+  &--tennis {
+    border-left-color: $sc-green;
+  }
 
   &__header {
     display: flex;
@@ -148,7 +132,12 @@ const hasSetDetails = computed(() => {
 }
 
 @keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.4; }
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
 }
 </style>

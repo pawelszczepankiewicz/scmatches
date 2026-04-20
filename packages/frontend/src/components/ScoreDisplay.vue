@@ -12,43 +12,15 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed } from "vue";
+import { parseSetDetails } from "../utils/scoreParser";
 
 const props = defineProps<{
   score: string;
   sport: string;
 }>();
 
-interface ScoreDetail {
-  label: string;
-  value: string;
-}
-
-const details = computed((): ScoreDetail[] => {
-  const raw = props.score;
-
-  // Set-based sports (tennis, volleyball): "Main score: 3:0 (set1 25:23, set2 25:19, set3 25:21)"
-  const parenMatch = raw.match(/\((.+)\)/);
-  if (parenMatch) {
-    return parenMatch[1]
-      .split(',')
-      .map((s, i) => ({
-        label: `S${i + 1}`,
-        value: s.replace(/set\d+\s*/, '').trim(),
-      }))
-      .filter(d => d.value.length > 0);
-  }
-
-  // Basketball: "9:7,2:1,5:3,9:9" — show as quarters
-  if (props.sport === 'basketball') {
-    return raw.split(',').map((q, i) => ({
-      label: `Q${i + 1}`,
-      value: q.trim(),
-    }));
-  }
-
-  return [];
-});
+const details = computed(() => parseSetDetails(props.score, props.sport));
 </script>
 
 <style scoped lang="scss">

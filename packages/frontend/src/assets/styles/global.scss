@@ -53,7 +53,7 @@ a {
     color: $sc-white;
 
     &:hover {
-      background: color-mix(in srgb, $sc-magenta, black 10%);
+      background: $sc-magenta-dark;
     }
   }
 

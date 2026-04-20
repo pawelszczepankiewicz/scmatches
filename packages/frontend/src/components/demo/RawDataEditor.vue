@@ -33,32 +33,36 @@
         <div class="editor__index">#{{ i + 1 }}</div>
         <div class="editor__fields">
           <div class="editor__field">
-            <label>Sport</label>
+            <label :for="`match-${i}-sport`">Sport</label>
             <input
+              :id="`match-${i}-sport`"
               v-model="match.sport"
               placeholder="e.g. soccer, tennis..."
               @input="emitUpdate"
             />
           </div>
           <div class="editor__field">
-            <label>Participant 1</label>
+            <label :for="`match-${i}-p1`">Participant 1</label>
             <input
+              :id="`match-${i}-p1`"
               v-model="match.participant1"
               placeholder="Team or player name"
               @input="emitUpdate"
             />
           </div>
           <div class="editor__field">
-            <label>Participant 2</label>
+            <label :for="`match-${i}-p2`">Participant 2</label>
             <input
+              :id="`match-${i}-p2`"
               v-model="match.participant2"
               placeholder="Team or player name"
               @input="emitUpdate"
             />
           </div>
           <div class="editor__field editor__field--score">
-            <label>Score</label>
+            <label :for="`match-${i}-score`">Score</label>
             <input
+              :id="`match-${i}-score`"
               :value="scoreToString(match.score)"
               @input="updateScore(i, ($event.target as HTMLInputElement).value)"
               placeholder="e.g. 2:1 or 3:0,25:23,25:19"
@@ -92,10 +96,14 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from 'vue';
+import { ref, watch, onBeforeUnmount } from 'vue';
 import type { RawMatch, Score } from '@sc-test/shared';
 import type { ParseResult } from '../../utils/parseMatchClient';
 import { DEFAULT_RAW_MATCHES } from '../../data/defaultMatches';
+
+function cloneMatches(matches: RawMatch[]): RawMatch[] {
+  return JSON.parse(JSON.stringify(matches));
+}
 
 const props = defineProps<{
   modelValue: RawMatch[];
@@ -107,17 +115,17 @@ const emit = defineEmits<{
 }>();
 
 const mode = ref<'form' | 'json'>('form');
-const localMatches = ref<RawMatch[]>(JSON.parse(JSON.stringify(props.modelValue)));
+const localMatches = ref<RawMatch[]>(cloneMatches(props.modelValue));
 const jsonText = ref(JSON.stringify(props.modelValue, null, 2));
 const jsonError = ref<string | null>(null);
 
 watch(() => props.modelValue, (val) => {
-  localMatches.value = JSON.parse(JSON.stringify(val));
+  localMatches.value = cloneMatches(val);
   jsonText.value = JSON.stringify(val, null, 2);
 }, { deep: true });
 
 function emitUpdate() {
-  emit('update:modelValue', JSON.parse(JSON.stringify(localMatches.value)));
+  emit('update:modelValue', cloneMatches(localMatches.value));
 }
 
 function scoreToString(score: Score | null | undefined): string {
@@ -143,17 +151,17 @@ function updateScore(index: number, value: string) {
 }
 
 function addMatch() {
-  localMatches.value.push({ sport: '', participant1: '', participant2: '', score: '' });
+  localMatches.value = [...localMatches.value, { sport: '', participant1: '', participant2: '', score: '' }];
   emitUpdate();
 }
 
 function removeMatch(index: number) {
-  localMatches.value.splice(index, 1);
+  localMatches.value = localMatches.value.filter((_, i) => i !== index);
   emitUpdate();
 }
 
 function resetToDefault() {
-  const fresh = JSON.parse(JSON.stringify(DEFAULT_RAW_MATCHES));
+  const fresh = cloneMatches(DEFAULT_RAW_MATCHES);
   localMatches.value = fresh;
   emit('update:modelValue', fresh);
 }
@@ -162,12 +170,14 @@ function isValid(match: RawMatch): boolean {
   return !!(match.sport && match.participant1 && match.participant2 && match.score != null);
 }
 
-let jsonDebounce: ReturnType<typeof setTimeout>;
+const jsonDebounce = ref<ReturnType<typeof setTimeout>>();
+onBeforeUnmount(() => clearTimeout(jsonDebounce.value));
+
 function onJsonInput(e: Event) {
   const value = (e.target as HTMLTextAreaElement).value;
   jsonText.value = value;
-  clearTimeout(jsonDebounce);
-  jsonDebounce = setTimeout(() => {
+  clearTimeout(jsonDebounce.value);
+  jsonDebounce.value = setTimeout(() => {
     try {
       const parsed = JSON.parse(value);
       if (!Array.isArray(parsed)) throw new Error('Must be an array');
@@ -313,7 +323,7 @@ function onJsonInput(e: Event) {
 
     input {
       padding: $space-xs $space-sm;
-      border: 1px solid darken($sc-gray-light, 8%);
+      border: 1px solid $sc-gray-border;
       border-radius: $radius-sm;
       font-family: $font-body;
       font-size: 13px;

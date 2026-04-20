@@ -12,12 +12,17 @@
         class="problems__item"
         :class="{ 'problems__item--open': openIndex === i }"
       >
-        <button class="problems__header" @click="toggle(i)">
+        <button
+          class="problems__header"
+          :aria-expanded="openIndex === i"
+          :aria-controls="`problem-body-${i}`"
+          @click="toggle(i)"
+        >
           <span class="problems__number">#{{ i + 1 }}</span>
           <span class="problems__name">{{ p.title }}</span>
-          <span class="problems__chevron">{{ openIndex === i ? '−' : '+' }}</span>
+          <span class="problems__chevron" aria-hidden="true">{{ openIndex === i ? '−' : '+' }}</span>
         </button>
-        <div v-if="openIndex === i" class="problems__body">
+        <div v-if="openIndex === i" :id="`problem-body-${i}`" role="region" class="problems__body">
           <div class="problems__section">
             <div class="problems__label">Problem</div>
             <p>{{ p.description }}</p>

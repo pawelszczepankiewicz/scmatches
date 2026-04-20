@@ -3,9 +3,9 @@ import {
   NotFoundException,
   ExceptionFilter,
   ArgumentsHost,
-} from '@nestjs/common';
-import { join } from 'path';
-import { Response, Request } from 'express';
+} from "@nestjs/common";
+import { join } from "path";
+import { Response, Request } from "express";
 
 @Catch(NotFoundException)
 export class SpaFallbackFilter implements ExceptionFilter {
@@ -15,7 +15,7 @@ export class SpaFallbackFilter implements ExceptionFilter {
     const req = ctx.getRequest<Request>();
 
     // API routes and file requests get the normal 404 JSON
-    if (req.path.startsWith('/api/') || req.path.includes('.')) {
+    if (req.path.startsWith("/api/") || req.path.includes(".")) {
       res.status(404).json({
         statusCode: 404,
         message: exception.message,
@@ -23,9 +23,9 @@ export class SpaFallbackFilter implements ExceptionFilter {
       return;
     }
 
-    // SPA routes — serve index.html and let Vue Router handle it
+    // SPA routes - serve index.html and let Vue Router handle it
     res.sendFile(
-      join(__dirname, '..', '..', '..', 'frontend', 'dist', 'index.html'),
+      join(__dirname, "..", "..", "..", "frontend", "dist", "index.html"),
     );
   }
 }
