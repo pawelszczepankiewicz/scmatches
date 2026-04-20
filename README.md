@@ -6,9 +6,9 @@ A refactoring of the Statscore coding exercise, delivered in two forms:
 
 | Folder                                     | Description                                                                                                                                              |
 | ------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [`simple-solution/`](simple-solution/)     | Standalone TypeScript refactoring of `app.js` — clean architecture, 18 tests, no frameworks. **Start here** to see the core refactoring.                 |
-| [`packages/`](packages/)                   | Full-stack application (Vue 3 + NestJS + Firestore) — live match dashboard with real-time WebSocket updates, REST API, and a technical showcase section. |
-| [`original-exercise/`](original-exercise/) | The original unmodified `app.js` and task description.                                                                                                    |
+| [`simple-solution/`](simple-solution/)     | Standalone TypeScript refactoring of `app.js` - clean architecture, 18 tests, no frameworks. **Start here** to see the core refactoring.                 |
+| [`packages/`](packages/)                   | Full-stack application (Vue 3 + NestJS + Firestore) - live match dashboard with real-time WebSocket updates, REST API, and a technical showcase section. |
+| [`original-exercise/`](original-exercise/) | The original unmodified `app.js` and task description.                                                                                                   |
 
 ## Quick Links
 
@@ -33,6 +33,8 @@ npm run dev:backend    # NestJS on :3000
 npm run dev:frontend   # Vue on :5173
 ```
 
+or deployed to https://statscore-dash--statscoreapp.europe-west4.hosted.app/showcase
+
 ## AI-Assisted Development
 
 Additional project ([`fullstack solution in /packages/`](packages/)) was built with the help of [Claude Code](https://claude.ai) (AI pair programming).
@@ -42,7 +44,7 @@ Additional project ([`fullstack solution in /packages/`](packages/)) was built w
 - Architecture: monorepo with shared package, NestJS + Vue, config-driven dispatch pattern
 - Tech stack choices: Firestore, Socket.io, SCSS with design tokens
 - UI/UX direction: scoreboard layout, page routing structure
-- What to build and what to skip — scoping each feature to stay production-aware without over-engineering
+- What to build and what to skip - scoping each feature to stay production-aware without over-engineering
 
 **Where AI accelerated the work:**
 
@@ -57,4 +59,4 @@ Additional project ([`fullstack solution in /packages/`](packages/)) was built w
 - Reviewed all generated code for correctness, security (no hardcoded secrets, proper validation), and consistency with the codebase patterns
 - The `simple-solution/` folder demonstrates the core refactoring logic can be explained line by line
 
-Using AI tooling is a deliberate skill choice — the same way a developer uses an IDE, linter, or Copilot. The value is in knowing _what to build_ and _when the output is correct_, not in typing speed.
+Using AI tooling is a deliberate skill choice - the same way a developer uses an IDE, linter, or Copilot. The value is in knowing _what to build_ and _when the output is correct_, not in typing speed.
