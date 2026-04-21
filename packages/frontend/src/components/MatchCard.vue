@@ -49,6 +49,8 @@ const hasSetDetails = computed(() =>
   min-height: $card-min-height;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
+  max-width: 100%;
 
   &--soccer {
     border-left-color: #22c55e;
@@ -97,13 +99,19 @@ const hasSetDetails = computed(() =>
     flex-direction: column;
     gap: $space-sm;
     flex: 1;
+    min-width: 0;
+
+    @include mobile {
+      padding: $space-sm $space-md;
+    }
   }
 
   &__row {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: $space-md;
+    gap: $space-sm;
+    min-width: 0;
   }
 
   &__team {

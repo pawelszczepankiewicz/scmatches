@@ -90,6 +90,8 @@ const consoleOutput = computed(() => {
   }
 
   &__cards {
+    min-width: 0;
+
     h3 {
       font-size: 14px;
       margin-bottom: $space-md;
@@ -109,6 +111,7 @@ const consoleOutput = computed(() => {
     display: flex;
     flex-direction: column;
     gap: $space-md;
+    min-width: 0;
   }
 
   &__filtered {
@@ -145,6 +148,8 @@ const consoleOutput = computed(() => {
   }
 
   &__console {
+    min-width: 0;
+
     h3 {
       font-size: 14px;
       font-family: monospace;
@@ -160,11 +165,10 @@ const consoleOutput = computed(() => {
     border-radius: $radius-md;
     font-size: 12px;
     line-height: 1.6;
-    overflow-x: auto;
+    overflow: auto;
     -webkit-overflow-scrolling: touch;
     max-height: 500px;
-    overflow-y: auto;
-    word-break: break-word;
+    white-space: pre;
 
     @include mobile {
       font-size: 11px;
