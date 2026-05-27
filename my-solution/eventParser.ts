@@ -1,8 +1,9 @@
-import type { RawMatch, ParsedMatch } from "./types";
+import { RawMatch } from "./types";
 import { SPORT_CONFIG } from "./sportConfig";
 
-export function parseMatch(match: RawMatch): ParsedMatch | null {
+export const parseMatch = (match: RawMatch) => {
   const config = SPORT_CONFIG[match.sport];
+
   if (
     !config ||
     !match.participant1 ||
@@ -20,4 +21,4 @@ export function parseMatch(match: RawMatch): ParsedMatch | null {
   } catch {
     return null;
   }
-}
+};
